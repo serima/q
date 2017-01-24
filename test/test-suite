@@ -1597,7 +1597,8 @@ class FormattingTests(AbstractQTestCase):
         # Required in order to maintain compatibility between GNU and POSIX sed
         # (simplistic 1i column_name sed command did not run properly on mac machines)
         sed_cmd = "'1i\\'$'\\n''column_name'$'\\n'"
-        cmd = 'seq 1 10 | sed ' + sed_cmd + ' | ../bin/q -f 1=%4.3f,2=%4.3f "select sum(column_name) mysum,avg(column_name) myavg from -" -c 1 -H -O'
+        perl_cmd = "'s/1\n/column_name\n1\n/;'"
+        cmd = 'seq 1 10 | perl -pe ' + perl_cmd + ' | ../bin/q -f 1=%4.3f,2=%4.3f "select sum(column_name) mysum,avg(column_name) myavg from -" -c 1 -H -O'
 
         retcode, o, e = run_command(cmd)
 
